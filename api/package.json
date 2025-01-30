@@ -18,5 +18,8 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.1.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.4"
   }
 }
