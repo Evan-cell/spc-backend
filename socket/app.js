@@ -8,10 +8,22 @@ const app = express();
 // Create a basic HTTP server
 const server = http.createServer(app);
 
-// Initialize Socket.io with CORS configuration
+// Allow connections from localhost during development and from the production URL
+const allowedOrigins = [
+  "http://localhost:5173",           // Local development URL
+  "https://spacekc.onrender.com",    // Deployed frontend URL on Render
+];
+
 const io = new Server(server, {
   cors: {
-    origin: "https://spacekc.onrender.com",  // Your deployed frontend URL
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        // Allow requests from the allowed origins
+        callback(null, true);
+      } else {
+        callback(new Error("Blocked by CORS policy"));
+      }
+    },
     methods: ["GET", "POST"],
   },
 });

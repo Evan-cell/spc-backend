@@ -47,52 +47,51 @@ export const getPost = async (req, res) => {
 
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
-        if (err) {
-          // If token is invalid, send an error response
-          return res.status(401).json({ message: "Invalid token" });
-        }
-        const saved = await prisma.savedPost.findUnique({
-          where: {
-            userId_postId: {
-              postId: id,
-              userId: payload.id,
+        if (!err) {
+          const saved = await prisma.savedPost.findUnique({
+            where: {
+              userId_postId: {
+                postId: id,
+                userId: payload.id,
+              },
             },
-          },
-        });
-        // Send the response from here and return to ensure no further code is executed
-        return res.status(200).json({ ...post, isSaved: saved ? true : false });
+          });
+          res.status(200).json({ ...post, isSaved: saved ? true : false });
+        }
       });
-    } else {
-      // If no token is present, send the response directly without checking the token
-      return res.status(200).json({ ...post, isSaved: false });
     }
+    res.status(200).json({ ...post, isSaved: false });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Failed to get post" });
+    res.status(500).json({ message: "Failed to get post" });
   }
 };
 
-
 export const addPost = async (req, res) => {
-  const body = req.body;
+  const { postData, postDetail } = req.body;
   const tokenUserId = req.userId;
+
+  // Ensure postData is properly structured
+  if (!postData || !postData.title) {
+    return res.status(400).json({ message: "Title is required." });
+  }
 
   try {
     const newPost = await prisma.post.create({
       data: {
-        ...body.postData,
+        ...postData,  // Spread postData to include title, price, etc.
         userId: tokenUserId,
-        postDetail: {
-          create: body.postDetail,
-        },
+        postDetail: postDetail ? { create: postDetail } : undefined, // Handle optional postDetail
       },
     });
+
     res.status(200).json(newPost);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to create post" });
   }
 };
+
 
 export const updatePost = async (req, res) => {
   try {
@@ -108,31 +107,14 @@ export const deletePost = async (req, res) => {
   const tokenUserId = req.userId;
 
   try {
-    // Fetch the post and its related PostDetail
     const post = await prisma.post.findUnique({
       where: { id },
-      include: {
-        postDetail: true, // Include related PostDetail
-      },
     });
 
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
-
-    // Ensure the user is authorized to delete the post
     if (post.userId !== tokenUserId) {
       return res.status(403).json({ message: "Not Authorized!" });
     }
 
-    // Delete the related PostDetail
-    if (post.postDetail) {
-      await prisma.postDetail.delete({
-        where: { id: post.postDetail.id },
-      });
-    }
-
-    // Then delete the Post
     await prisma.post.delete({
       where: { id },
     });

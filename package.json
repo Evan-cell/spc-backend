@@ -2,16 +2,13 @@
   "name": "api",
   "version": "1.0.0",
   "main": "app.js",
-  
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "postinstall": "prisma generate && npm rebuild bcrypt --build-from-source",
-      "dev": "nodemon api/app.js",
-      "start": "node api/app.js",
-      "build": "npm install && npm install --prefix client && npm run build --prefix client"
-    },
-  
-  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "prisma generate && npm rebuild bcrypt --build-from-source",
+    "dev": "nodemon api/app.js",  
+    "start": "node api/app.js",  
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -24,9 +21,11 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^6.1.0"
+    "prisma": "^6.1.0",
+    "socket.io": "^4.0.1"  
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.7.4"
+    "@flydotio/dockerfile": "^0.7.4",
+    "nodemon": "^2.0.15"  
   }
 }
