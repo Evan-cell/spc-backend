@@ -31,11 +31,12 @@ app.use("/api/users", userRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
-app.use(express.static(path.join(__dirname, 'client/dist')))
+app.use(express.static(path.join(__dirname, "client/dist"), { extensions: ['html', 'png', 'jpg', 'jpeg', 'svg'] }));
 
-app.get('*', (req,res)=>{
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
-})
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 app.listen(8000, () => {
   console.log("server is running!");
