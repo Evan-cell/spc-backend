@@ -96,7 +96,7 @@ function SinglePage() {
               <div className="post">
                 <h1>{post.title}</h1>
                 <div className="address">
-                  <img src="/pin.png" alt="" />
+                  <img src="https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-pin-icon-and-symbol-isolated-png-image_1727884.jpg" alt="" />
                   <span>{post.address}</span>
                 </div>
                 <div className="price">ksh {post.price}</div>
