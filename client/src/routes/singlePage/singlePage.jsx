@@ -120,7 +120,7 @@ function SinglePage() {
           <p className="title">General</p>
           <div className="listVertical">
             <div className="feature">
-              <img src="/utility.png" alt="https://spacekc.onrender.com/utility.png" />
+              <img src="/utility.png" alt="" />
               <div className="featureText">
                 <span>Utilities</span>
                 {post.postDetail.utilities === "owner" ? (
@@ -179,14 +179,14 @@ function SinglePage() {
               </div>
             </div>
             <div className="feature">
-              <img src="/pet.png" alt="https://spacekc.onrender.com/pet.png" />
+              <img src="/pet.png" alt="" />
               <div className="featureText">
                 <span>Bus Stop</span>
                 <p>{post.postDetail.bus}m away</p>
               </div>
             </div>
             <div className="feature">
-              <img src="/fee.png" alt="https://spacekc.onrender.com/fee.png" />
+              <img src="/fee.png" alt="" />
               <div className="featureText">
                 <span>Restaurant</span>
                 <p>{post.postDetail.restaurant}m away</p>
@@ -199,7 +199,7 @@ function SinglePage() {
           </div>
           <div className="buttons">
             <button onClick={handleChat}>
-              <img src="/chat.png" alt="https://spacekc.onrender.com/chat.png" />
+              <img src="/chat.png" alt="" />
               Send a Message
             </button>
             <button
