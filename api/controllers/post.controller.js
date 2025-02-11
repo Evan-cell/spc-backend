@@ -10,22 +10,22 @@ export const getPosts = async (req, res) => {
         city: query.city || undefined,
         type: query.type || undefined,
         property: query.property || undefined,
-        bedroom: parseInt(query.bedroom) || undefined,
+        bedroom: query.bedroom ? parseInt(query.bedroom) : undefined,
         price: {
-          gte: parseInt(query.minPrice) || undefined,
-          lte: parseInt(query.maxPrice) || undefined,
+          gte: query.minPrice ? parseInt(query.minPrice) : undefined,
+          lte: query.maxPrice ? parseInt(query.maxPrice) : undefined,
         },
       },
     });
 
-    // setTimeout(() => {
-    res.status(200).json(posts);
-    // }, 3000);
+    return res.status(200).json(posts); // ✅ Always return after sending response
+
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get posts" });
+    return res.status(500).json({ message: "Failed to get posts" }); // ✅ Ensure a single error response
   }
 };
+
 
 export const getPost = async (req, res) => {
   const id = req.params.id;
