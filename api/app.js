@@ -31,7 +31,7 @@ app.use("/api/users", userRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
-app.use(express.static(path.join(__dirname, 'client/dist')))
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.get('*', (req,res)=>{
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
