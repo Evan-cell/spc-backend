@@ -19,7 +19,7 @@ function Card({ item }) {
         <div className="bottom">
           <div className="features">
             <div className="feature">
-              <img src="/bed.png" alt="" />
+              <img src="/pin.png" alt="" />
               <span>{item.bedroom} bedroom</span>
             </div>
             <div className="feature">
