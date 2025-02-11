@@ -7,7 +7,7 @@ import testRoute from "./routes/test.route.js"
 import userRoute from "./routes/user.route.js";
 import chatRoute from "./routes/chat.route.js";
 import messageRoute from "./routes/message.route.js";
-import path from 'path'
+import path from 'path';
 
 const app = express();
 
@@ -24,6 +24,7 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 
+// API routes
 app.use("/api/posts", postRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/test", testRoute);
@@ -31,8 +32,10 @@ app.use("/api/users", userRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
-app.use(express.static(path.join(__dirname, 'client/dist')));
+// Serve static files
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
+// For handling non-API requests (client-side routing fallback)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
